@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title> Dossier2_EFF_TH_2020 </title>
+
+</head>
+
+
+<body>
+<h1> Inscription: </h1>
+<form action="resultat" method="Get" >
+<fieldset>
+	<table>
+		<tr>
+			<td colspan=2>
+				<input type="radio" name="genre" value="Madame"> Madame
+				<input type="radio" name="genre" value="Mademoiselle"> Mademoiselle
+				<input type="radio" name="genre" value="Monsieur"> Monsieur
+			</td>
+		</tr>
+		<tr>
+			<td> Votre prenom :* </td>
+			<td> <input type="text" name="prenom" required> </td>
+		</tr>
+		<tr>	
+			<td> Votre nom :* </td>
+			<td> <input type="text" name="nom" required> </td>
+		</tr>
+		<tr>
+			<td> Telephone :* </td>
+			<td> <input type="tel" name="tel" required> </td>
+		</tr>
+		<tr>
+			<td> Ville :* </td>
+			<td>
+				<select name="ville" size="1" required>
+					<option value=""> --- Choisissez une ville --- </option>
+					<option value="casablanca"> Casablanca </option>
+					<option value="rabat"> Rabat </option>
+					<option value="fes"> Fes </option>
+					<option value="tanger"> Tanger </option>
+					<option value="marrakech"> Marrakesh </option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td> Intituler votre blague :* </td>
+			<td> <input type="text" name="intitule" required> </td>
+		</tr>
+		<tr>
+			<td> Votre Blague :* </td>
+		</tr>
+		<tr>
+			<td colspan="2"> <textarea name="blague" rows="8" cols="60">  </textarea> </td>
+		</tr>
+		<tr>
+			<td> Quel est le resultat de l'expression :
+				<span id="exp" style="background-color:lightgray;">3+5</span>
+				
+				 </td>
+			<td> <input type="text" name="resultat"> </td>
+		</tr>
+		<tr>
+			<td colspan="2"> <input type="button" value="Sauvegarder" onclick="enregistrer();"> <input type="reset" value="Annuler"></td>
+		</tr>
+	</table>
+</fieldset>
+</form>
+
+<div id="affichage"></div>
+
+<script>
+		var min=1;var max=100;
+		var a=parseInt(Math.random()*(max-min)+min);
+		var b=parseInt(Math.random()*(max-min)+min);
+		var valeurcaptcha=a+b;
+		
+		var captcha=a+" + "+b;
+		document.getElementById("exp").innerHTML=captcha;
+		
+		function enregistrer()
+		{
+			var result=parseInt(document.getElementsByName("resultat")[0].value);
+			if( result!=valeurcaptcha)alert("resultat de l'expression incorrect");
+        	else
+			{
+				var genres=document.getElementsByName("genre"); 
+				var genre="";
+				for(var i=0;i<genres.length;i++)if(genres[i].checked)genre=genres[i].value;
+				
+				var prenom=document.getElementsByName("prenom")[0].value;
+				var nom=document.getElementsByName("nom")[0].value;
+				var tel=document.getElementsByName("tel")[0].value;
+                var ville=document.getElementsByName("ville")[0].value;
+				var inblague=document.getElementsByName("intitule")[0].value;
+				var blague=document.getElementsByName("blague")[0].value;
+				
+				if(genre.trim().length==0 || prenom.trim().length==0 || nom.trim().length==0 || tel.trim().length==0 || ville.length==0  || inblague.trim().length==0  || blague.trim().length==0)
+					alert("vous devez saisir les champs obligatoires");
+                else{
+					var txt= "genre: "+genre;
+					txt +="<br>prenom : " + prenom;
+					txt +="<br>nom : " + nom;
+					txt +="<br>tel : " +tel;
+					txt +="<br>ville:" + ville;
+					txt +="<br>inblague:" + inblague;
+					txt +="<br>blague : " +blague;
+					//solution 1 : dans alert
+					alert(txt.replaceAll("<br>","\n"));
+					//solution 2 : dans div
+					document.getElementById("affichage").innerHTML=txt;
+					//solution 3 : dans popup
+					var url="";
+					var options="location=yes,toolbar=yes,menubar=yes,scrollbars=yes,statusbar=yes,resizable=yes,directories=yes,width=300,height=300";
+					
+					var win = window.open(url, "namewindow", options);
+					win.document.write(txt);	
+				}
+            
+			}
+		}
+
+
+
+</script>
+</body>
+</html>

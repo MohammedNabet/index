@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form>
+		<fieldset>
+			<legend>Authentification:</legend>
+
+			<table>
+				<tr>
+					<td>LOGIN:</td>
+					<td><input type="email" name="login" required><span id="msglogin"></span></td>
+				</tr>
+				<tr>
+					<td>PASSWORD:</td>
+					<td><input type="passwodr" name="mdp" required><span id="msgpwd"></span></td>
+				</tr>
+				<tr>
+					<td>Quel est le resultat de l'expression suivante : 
+						<span id="span1" style="background-color: lightgray;">
+							3+5
+						</span></td>
+						<td>
+							<input type="text" name="captacha">
+							<span id="msgcaptcha"></span>
+						</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" value="CLIK ICI" onclick="sinc();" >
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+
+
+	<script>
+		var min=0; var max=26;
+		var a=String.fromCharCode(parseInt(Math.random()*(max-min)+min)+65);
+		var b=String.fromCharCode(parseInt(Math.random()*(max-min)+min)+65);
+		var c=String.fromCharCode(parseInt(Math.random()*(max-min)+min)+65);
+		var d=String.fromCharCode(parseInt(Math.random()*(max-min)+min)+65);
+
+		var resultat=a+b+c+d;
+		var captacha=a+"<i>"+b+"</i>"+c+"<i>"+d+"</i>";
+		document.getElementById("span1").innerHTML=captacha;
+
+		function sinc()
+		{
+			if(checkcaptcha() & checkemail() &  checkPassword() )
+				alert('Les Information Valid');
+			
+			else
+				alert('Invalid');
+		}
+
+		
+   function checkcaptcha(){
+            var captcha=document.getElementsByName("captacha")[0].value;
+			var spanmsg=document.getElementById("msgcaptcha");
+			
+            if( captcha!=resultat) {
+				 spanmsg.innerHTML="captcha invalide.";spanmsg.style.color="red";return false;}
+           else {spanmsg.innerHTML= "captcha valide.";spanmsg.style.color="green";return true;}
+        }
+        function checkemail()
+        {
+            var email=document.getElementsByName("login")[0].value;
+			var spanmsg=document.getElementById("msglogin");
+			
+           if(email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z-]{2,4}$/)) {
+				spanmsg.innerHTML="Email valide";spanmsg.style.color="green";return true;}
+           else {spanmsg.innerHTML= "Email invalide";spanmsg.style.color="red";return false;}
+        }  
+          
+        function checkPassword() { 
+            var password = document.getElementsByName("mdp")[0].value; 
+			var spanmsg=document.getElementById("msgpwd");
+			
+            if (password.match( /[A-Z]/g) && password.match(/[a-z]/g) && password.length >= 8) 
+                {spanmsg.innerHTML = "Mot de passe fort."; spanmsg.style.color="green";return true;}
+            else{ spanmsg.innerHTML = "Mot de passe faible."; spanmsg.style.color="red";return false;}
+        } 
+       
+	</script>
+
+</body>
+</html>
